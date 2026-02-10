@@ -1,6 +1,9 @@
 const express = require("express");
 const router = express.Router();
 
+const authMiddleware = require("../middleware/auth.middleware");
+const adminMiddleware = require("../middleware/admin.middleware");
+
 const {
   addProduct,
   getProducts,
@@ -9,19 +12,15 @@ const {
   getLowStockSummary
 } = require("../controllers/productController");
 
-// ➕ Add product
-router.post("/add", addProduct);
 
-// 📦 Get all products
-router.get("/list", getProducts);
+router.post("/add", authMiddleware, adminMiddleware, addProduct);
 
-// 🗑️ Delete products
-router.delete("/", deleteProduct);
+router.get("/list", authMiddleware, getProducts);
 
-// ✏️ Update product
-router.put("/:id", updateProduct);
+router.delete("/", authMiddleware, adminMiddleware, deleteProduct);
 
-// ⚠️ Low stock summary (count + products)
-router.get("/low-stock", getLowStockSummary);
+router.put("/:id", authMiddleware, adminMiddleware, updateProduct);
+
+router.get("/low-stock", authMiddleware, adminMiddleware, getLowStockSummary);
 
 module.exports = router;

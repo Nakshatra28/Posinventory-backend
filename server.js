@@ -42,7 +42,7 @@ app.use("/api/audit", require("./routes/auditSummaryRoutes"));
 app.use("/api/stock-movements", require("./routes/stockMovementRoutes"));
 
 // app.use("/api/dashboard", require("./routes/dashboardRoutes"));
-
+app.use("/api/auth", require("./routes/auth.routes"));
 // Start server
 const PORT = 5000;
 app.listen(PORT, () => {
